@@ -13,16 +13,16 @@ class SubDetection:
         self.graph_path = os.path.join(CUR_DIR, 'utils', 'frcnn_inception_v2_graph.pbtxt')
         self.labelimg_output_dir = os.path.join(CUR_DIR, 'output')
 
-    def detect_cars_image(self, frame, filename):
+    def detect_cars_image(self, frame, filename, dir_name):
 
         label_file_name = filename + "_LabelIMg" + ".jpg"
-        label_output_file_path = os.path.join(self.labelimg_output_dir, label_file_name)
+        label_output_file_path = os.path.join(self.labelimg_output_dir, dir_name, label_file_name)
 
         cvNet = cv2.dnn.readNetFromTensorflow(self.model_path, self.graph_path)
 
         frame_height = frame.shape[0]
         frame_width = frame.shape[1]
-        print(frame_width, frame_height)
+        # print(frame_width, frame_height)
         cvNet.setInput(cv2.dnn.blobFromImage(frame, size=(300, 300), swapRB=True, crop=False))
         cvOut = cvNet.forward()
 

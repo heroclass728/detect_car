@@ -11,13 +11,12 @@ class ImageResize:
 
         self.output_dir = os.path.join(CUR_DIR, 'output')
 
-    def resize_image(self, image_path):
+    def resize_image(self, image_path, dir_name):
 
         file_path = ntpath.basename(image_path)
-        head, tail = ntpath.split(file_path)
-        origin_file_name = tail.replace(".jpg", "")
+        origin_file_name = file_path.replace(".jpg", "")
         resized_file_name = origin_file_name + "_resized" + ".jpg"
-        output_file_path = os.path.join(self.output_dir, resized_file_name)
+        output_file_path = os.path.join(self.output_dir, dir_name, resized_file_name)
 
         car_image = cv2.imread(image_path)
         car_image_width = car_image.shape[1]
@@ -38,6 +37,10 @@ class ImageResize:
 
             resized_image = car_image
 
-        cv2.imwrite(output_file_path, resized_image)
+        resized_image_width = resized_image.shape[1]
+        resized_image_height = resized_image.shape[0]
 
-        return resized_image, origin_file_name
+        cv2.imwrite(output_file_path, resized_image)
+        print("Successfully created {}".format(resized_file_name))
+
+        return resized_image, origin_file_name, output_file_path, resized_image_width, resized_image_height
