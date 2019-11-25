@@ -31,7 +31,7 @@ class SubDetection:
         for detection in cvOut[0, 0, :, :]:
             score = float(detection[2])
             label = int(detection[1])
-            if score > 0.3 and label == 2:
+            if score > 0.3:
                 left = detection[3] * frame_width
                 top = detection[4] * frame_height
                 right = detection[5] * frame_width
@@ -50,5 +50,3 @@ class SubDetection:
         cv2.imwrite(label_output_file_path, frame)
 
         return max_boundary
-        # cv2.imshow('img', frame)
-        # cv2.waitKey()
